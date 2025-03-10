@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center my-4">Favori Kitaplarım</h2>
+        {% if favorites %}
+            <div class="row">
+                {% for item in favorites %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="{{ item.book.cover_image.url }}" class="card-img-top" alt="{{ item.book.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.book.title }}</h5>
+                                <p class="card-text text-muted">Yazar: {{ item.book.author }}</p>
+                                <p class="card-text fw-bold">{{ item.book.price }}₺</p>
+                                <a href="{% url 'book_detail' item.book.id %}" class="btn btn-primary">Detay</a>
+                                <a href="{% url 'remove_from_favorites' item.book.id %}" class="btn btn-secondary">❌ Kaldır</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Favori kitap listeniz boş.</p>
+        {% endif %}
+    </div>
+{% endblock %}

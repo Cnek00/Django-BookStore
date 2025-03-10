@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">💳 Ödeme Sayfası</h2>
+
+    {% if cart_items %}
+        <form method="POST" class="shadow p-4 bg-white rounded">
+            {% csrf_token %}
+            
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>📖 Kitap</th>
+                            <th>🔢 Adet</th>
+                            <th>💰 Fiyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td class="align-middle">{{ item.book.title }}</td>
+                            <td class="align-middle">{{ item.quantity }}</td>
+                            <td class="align-middle">{{ item.book.price }}₺</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Genel Toplam -->
+            <div class="text-end mt-3">
+                <h4 class="fw-bold">🛍 Genel Toplam: <span class="text-success">{{ total_price }}₺</span></h4>
+            </div>
+
+            <!-- Ödeme Butonu -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg fw-bold">✅ Ödemeyi Tamamla</button>
+            </div>
+        </form>
+    {% else %}
+        <div class="alert alert-warning text-center mt-4">
+            <p>🛒 Sepetinizde ürün bulunmamaktadır.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

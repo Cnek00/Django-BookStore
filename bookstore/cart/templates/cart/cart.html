@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">🛒 Sepetiniz</h2>
+
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>📖 Kitap</th>
+                        <th>🔢 Adet</th>
+                        <th>💰 Fiyat</th>
+                        <th>⚙ İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td class="align-middle">{{ item.book.title }}</td>
+                        <td class="align-middle">{{ item.quantity }}</td>
+                        <td class="align-middle">{{ item.book.price }}₺</td>
+                        <td class="align-middle">
+                            <a href="{% url 'add_to_cart' item.book.id %}" class="btn btn-success btn-sm">➕</a>
+                            <a href="{% url 'remove_from_cart' item.book.id %}" class="btn btn-danger btn-sm">➖</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Toplam Tutar -->
+        <div class="text-end mt-3">
+            <h4 class="fw-bold">🛍 Toplam: <span class="text-success">{{ total_price }}₺</span></h4>
+        </div>
+
+        <!-- Ödeme Butonu -->
+        <div class="text-center mt-4">
+            <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg fw-bold">💳 Ödeme Yap</a>
+        </div>
+
+    {% else %}
+        <div class="alert alert-warning text-center mt-4">
+            <p>🛒 Sepetiniz boş. Hadi biraz alışveriş yapalım! 📚</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
